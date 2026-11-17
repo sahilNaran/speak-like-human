@@ -1,19 +1,28 @@
 ---
 name: voice-interview
-description: Runs a detailed interview about how the person writes (samples, short writing exercises, punctuation and tone preferences, AI patterns to ban), then saves a personal style profile to their Claude settings file. Use when someone wants Claude to write in their own voice or wants to set up or redo their writing style rules.
-disable-model-invocation: true
+description: Runs a detailed interview about how the person writes (samples, short writing exercises, punctuation and tone preferences, AI patterns to ban), then produces a personal style profile for their Claude settings. Use only when someone explicitly asks to run the voice interview, to set up or redo their writing style or English preferences, or to make Claude write in their own voice.
 argument-hint: "[quick|full] [--target <path>]"
 ---
 
 # Voice interview
 
-You are interviewing someone to learn how they write, so that everything Claude writes for them afterwards sounds like them. The result is a style profile saved into their Claude settings file (`CLAUDE.md`). The person should finish feeling that the questions were easy, that you noticed things about their writing they hadn't put into words, and that it didn't drag.
+You are interviewing someone to learn how they write, so that everything Claude writes for them afterwards sounds like them. The result is a style profile that goes into their Claude settings. The person should finish feeling that the questions were easy, that you noticed things about their writing they hadn't put into words, and that it didn't drag.
 
 Arguments: `$ARGUMENTS`
 
 - `full` (the default) runs every stage and takes about 20 minutes.
 - `quick` skips the writing exercises and the A/B rounds, and caps calibration at two rounds. About 5 minutes.
-- `--target <path>` writes the profile to that file. Without it, the target is `~/.claude/CLAUDE.md`.
+- `--target <path>` writes the profile to that file, whichever app this is.
+
+## Where the profile goes
+
+The profile has to end up wherever the person's app keeps its standing instructions, and that differs by app. Settle this in stage 1.
+
+- **Claude Code** (terminal, IDE, or the Code tab of the desktop app): the file `~/.claude/CLAUDE.md`. You write it directly. This is file mode.
+- **Cowork**: the Global instructions box in the desktop app's settings, in the Cowork section. You can't write to that box, so the person pastes the profile in. This is paste mode. Never write to `~/.claude/CLAUDE.md` from Cowork: the session runs in a sandbox, so the file would not be the person's real settings and would disappear with the session.
+- **Claude chat** (desktop, web, or mobile): the personal preferences box in the app's settings. Paste mode again.
+
+If `--target` was given, use file mode with that path. Otherwise work out which app this is from what you know about your environment. If you can't tell, ask the person which they use, in one question.
 
 Supporting files, relative to this skill's folder. Read each one when you reach the stage that needs it, not all at the start.
 
@@ -29,7 +38,7 @@ Evidence beats self-report. People describe their writing badly and demonstrate 
 
 Infer first, then confirm. Once you have samples, most questions should arrive with your guess attached: "You used contractions in every sample, so I'll keep them. Right?" Only ask cold when you have no evidence.
 
-Keep it light. One topic per turn. Use `AskUserQuestion` for discrete choices and group related ones into a single call (up to four questions). Use plain chat for anything the person has to write. Never ask a question whose answer you can already see.
+Keep it light. One topic per turn. Use `AskUserQuestion` for discrete choices and group related ones into a single call (up to four questions). If that tool isn't available, ask in plain text with short numbered options, so the person can answer "1, 2, 1". Use plain chat for anything the person has to write. Never ask a question whose answer you can already see.
 
 Anything can be skipped. If the person skips a question, use the evidence you have, or the baseline, and move on without comment.
 
@@ -43,7 +52,11 @@ Samples stay in the conversation. Never write the person's raw samples to disk. 
 
 ### 1. Setup
 
-Work out the target file from the arguments and read it if it exists. Then decide which case applies.
+Decide between file mode and paste mode as described above.
+
+In paste mode, look for the person's existing writing rules in the instructions you were already given for this session, since their global instructions or preferences may be visible to you. If you can't see any, ask them to paste whatever writing rules they already keep in that settings box, or to say they have none. Then apply the same three cases below to that text.
+
+In file mode, read the target file if it exists. Then decide which case applies.
 
 - A managed block exists, between `<!-- voice-profile:start -->` and `<!-- voice-profile:end -->`. Tell the person, summarise it in two or three sentences, and ask whether they want to revise it or start again.
 - The file has writing style rules with no markers around them. Treat those rules as the starting point. Tell the person you've found them and that the new profile will replace that section once they've confirmed the final diff.
@@ -97,7 +110,16 @@ Stop as soon as a whole round passes, or when the person says it's good enough. 
 
 ### 9. Write
 
-Show the full profile, then show what will change in the target file as a diff. Ask for confirmation with `AskUserQuestion`: write it, change something first, or cancel.
+**Paste mode.** Show the full profile in a single code block, markers included, so it can be copied in one go. If you can save files where the person can reach them, also save it as `voice-profile.md` and give them the file. Then give the steps, briefly:
+
+1. Open the desktop app's settings. In Cowork, find Global instructions in the Cowork section. In chat, find the personal preferences box. Menu names shift between versions, so describe what to look for and don't insist on an exact path.
+2. If old writing rules are in that box, delete them. Leave any instructions about other things alone.
+3. Paste the profile in and save.
+4. Start a new session, since open ones keep the old instructions.
+
+Offer to check the result: once they've pasted it, they can start a new session and ask for a short email on any subject to see the voice at work. Mention `voice-tune` for later adjustments and `voice-check` for checking a draft. That completes paste mode, and the rest of this stage applies to file mode only.
+
+**File mode.** Show the full profile, then show what will change in the target file as a diff. Ask for confirmation: write it, change something first, or cancel.
 
 On confirmation:
 

@@ -10,7 +10,12 @@ Adjust an existing style profile with the smallest edit that fixes what the pers
 
 Arguments: `$ARGUMENTS`
 
-The profile sits in `~/.claude/CLAUDE.md` unless `--target <path>` says otherwise, between the lines `<!-- voice-profile:start -->` and `<!-- voice-profile:end -->`.
+The profile sits between the lines `<!-- voice-profile:start -->` and `<!-- voice-profile:end -->`. Where it lives depends on the app.
+
+- In Claude Code, it's in `~/.claude/CLAUDE.md`, or the file given by `--target <path>`. You read and edit the file. This is file mode.
+- In Cowork or Claude chat, it's in a settings box you can't write to (Global instructions for Cowork, personal preferences for chat). Take the profile from the instructions you were given for this session if it's visible there, and otherwise ask the person to paste it. This is paste mode. Don't read or write `~/.claude/CLAUDE.md` from Cowork, because the session runs in a sandbox and that file isn't the person's real settings.
+
+In paste mode, steps 1 to 3 work the same way on the pasted text. In step 4, skip the backup and the write: show the whole revised profile in one code block and ask the person to replace the old one in their settings box with it, then start a new session.
 
 ## Steps
 

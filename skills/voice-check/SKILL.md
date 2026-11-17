@@ -14,7 +14,7 @@ Arguments: `$ARGUMENTS`
 
 1. **Get the draft.** It's the pasted text, the file at the given path, or the piece of writing most recently discussed in the conversation. If none of those is clear, ask.
 
-2. **Load the profile.** Read `~/.claude/CLAUDE.md`, or the file given by `--target <path>`, and find the block between `<!-- voice-profile:start -->` and `<!-- voice-profile:end -->`. If there are no markers, use whatever writing style rules the file contains. If there are none, say so, check the draft against `../voice-interview/references/ai-tells.md` alone, and mention that `/voice-interview` would create a profile.
+2. **Load the profile.** It's the block between `<!-- voice-profile:start -->` and `<!-- voice-profile:end -->`. In Claude Code, read `~/.claude/CLAUDE.md`, or the file given by `--target <path>`. In Cowork or Claude chat, the profile lives in a settings box, so look for it in the instructions you were given for this session, and ask the person to paste it if it isn't there. If there are no markers, use whatever writing style rules you find. If there are none, say so, check the draft against `../voice-interview/references/ai-tells.md` alone, and mention that `/voice-interview` would create a profile.
 
 3. **Check the draft.** Read it twice, with a different question each time.
    - First, against the rules: spelling variant, punctuation, banned words and phrases, structure, and formatting. These are mechanical, so be exhaustive. For punctuation rules such as a dash ban, search the text for the characters instead of relying on a read-through.
