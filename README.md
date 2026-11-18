@@ -6,6 +6,8 @@ Claude writes well, but it doesn't write like you. You can usually tell when it'
 
 This sorts that out. It's an interview that works out how you write, then gives Claude a set of rules so it sounds like you from then on. That covers emails, documents, chat replies, commit messages, and anything else it writes for you.
 
+This is the Claude version. There's one for GitHub Copilot on the [`github-copilot`](https://github.com/sahilNaran/speak-like-human/tree/github-copilot) branch and one for Microsoft Copilot on the [`ms-copilot`](https://github.com/sahilNaran/speak-like-human/tree/ms-copilot) branch.
+
 ## How it works
 
 You start by giving it a few things you've written. It then asks you to write a couple of short bits on the spot ("turn down this meeting in your own words") and checks what you think about em dashes, hyphens, spelling, and how formal you like to be. It also shows you a list of common AI habits so you can ban the ones that annoy you.
