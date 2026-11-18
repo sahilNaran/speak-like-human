@@ -54,7 +54,7 @@ Choose the dimensions you're least sure about. Write all versions cleanly and wi
 
 ## Explicit preferences (stage 5)
 
-Group these into a few `AskUserQuestion` calls. Put your inference first and mark it as recommended. Include a short example in each option's description, because people answer punctuation questions far better when they can see the result.
+Ask these a few at a time, as numbered options. Put your inference first and say it is your recommendation. Include a short example in each option's description, because people answer punctuation questions far better when they can see the result.
 
 ### Language
 

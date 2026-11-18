@@ -1,10 +1,12 @@
-# speak-like-human
+# speak-like-human for GitHub Copilot
 
 > Your uniqueness, makes you, you.
 
-Claude writes well, but it doesn't write like you. You can usually tell when it's had a hand in something: the em dashes, the word "delve", the cheerful sign-off nobody asked for.
+Copilot writes well, but it doesn't write like you. You can usually tell when it's had a hand in something: the em dashes, the word "delve", the commit message that reads like a press release.
 
-This sorts that out. It's an interview that works out how you write, then gives Claude a set of rules so it sounds like you from then on. That covers emails, documents, chat replies, commit messages, and anything else it writes for you.
+This sorts that out. It's an interview that works out how you write, then gives Copilot a set of rules so it sounds like you from then on. That covers chat replies, documentation, commit messages, pull request descriptions, and code comments.
+
+This is the GitHub Copilot branch. The Claude version is on `main`, and the Microsoft Copilot version is on `ms-copilot`.
 
 ## How it works
 
@@ -14,66 +16,49 @@ After that it tests itself. It writes a few sentences in your voice and you tell
 
 The full interview takes about 20 minutes. There's a quick one that takes about 5.
 
-## Setting it up in Cowork
+## Setting it up
 
-All you need is the Claude desktop app and the link to this repo.
+The interview is packaged as three agent skills, which Copilot picks up from the `.github/skills` folder. You'll need a version of VS Code or Copilot CLI that supports agent skills.
 
-1. In Cowork, go to the Plugins page (it's under Customize, then Browse plugins) and pick Add marketplace. On some versions it's a + button on the Personal tab instead.
-2. Paste in `https://github.com/sahilNaran/speak-like-human`.
-3. Install speak-like-human from the list.
-4. Start a new session and type `run the voice interview`. If you're short on time, type `run the quick voice interview`.
-
-One thing to know: Claude can't change Cowork's settings for you. So when the interview finishes, it gives you your rules as a block of text. Copy it, open Settings, find Global instructions in the Cowork section, paste it in, and save. Every new session will use it.
-
-If you've already got writing rules in that box, don't worry. The interview asks about them at the start and tells you what to swap out at the end.
-
-This works in normal Claude chat too. The only difference is that the rules go into the personal preferences box in Settings.
-
-## Setting it up in Claude Code
-
-Clone the repo and open Claude Code inside it. There's nothing to install.
+Clone this branch and open the folder:
 
 ```
-git clone https://github.com/sahilNaran/speak-like-human.git
+git clone -b github-copilot https://github.com/sahilNaran/speak-like-human.git
 cd speak-like-human
-claude
+code .
 ```
 
-Then type `/voice-interview`.
+Open Copilot Chat in agent mode and type `run the voice interview`. If you're short on time, type `run the quick voice interview`. In Copilot CLI, run `copilot` in the folder and ask for the same thing.
 
-You only have to do this once. Your rules get saved to `~/.claude/CLAUDE.md`, which Claude reads in every project, so you can delete the folder afterwards.
+If you'd like the skills available in every project, copy the three folders from `.github/skills` into `~/.copilot/skills`.
 
-If you'd like to keep it around, install it as a plugin:
+## Where your rules end up
 
-```
-/plugin marketplace add sahilNaran/speak-like-human
-/plugin install speak-like-human@speak-like-human
-```
+Copilot keeps its standing instructions in a few different places, so the interview asks which one you want.
 
-The commands get a prefix when you do it this way, so it's `/speak-like-human:voice-interview`.
+- For Copilot CLI, it writes them to `~/.copilot/copilot-instructions.md` for you.
+- For VS Code across all your projects, it gives you the rules as a block of text and walks you through saving them as a user-level instructions file.
+- For Copilot Chat on github.com, it gives you the same block to paste into your personal instructions there.
+- For a single repository, it can write them to `.github/copilot-instructions.md`. Bear in mind that everyone using Copilot in that repo gets them too.
+
+Whenever it writes a file, it shows you the change first, waits for you to say yes, and saves a copy of the old file next to it.
+
+One limit to know about: custom instructions shape what Copilot says in chat and agent mode. They don't affect the inline suggestions that appear as you type.
 
 ## What's in it
 
 There are three skills.
 
-`voice-interview` is the main one, described above. Add `quick` for the short version.
+`voice-interview` is the main one, described above.
 
-`voice-tune` is for small fixes later. Tell it what sounded wrong ("that email was too stiff", "I do use semicolons") and it changes the one rule that caused it. You don't have to sit through the interview again.
+`voice-tune` is for small fixes later. Tell it what sounded wrong ("that pull request description was too stiff", "I do use semicolons") and it changes the one rule that caused it. You don't have to sit through the interview again.
 
 `voice-check` reads a draft and points out anything that breaks your rules or sounds like a machine wrote it, with a suggested fix for each. It never touches your settings.
 
-## What it changes on your machine
-
-In Cowork and Claude chat, nothing. You paste the rules in yourself.
-
-In Claude Code, it adds one section to `~/.claude/CLAUDE.md` and leaves the rest of the file alone. It shows you exactly what it's going to change and waits for you to say yes. It also saves a copy of the old file next to it first, named something like `CLAUDE.md.bak-20261117-143000`, so if you don't like the result you can copy that back.
-
-If you want to try it without touching your real settings, point it at a different file:
-
-```
-/voice-interview --target /tmp/test-profile.md
-```
-
 ## Your writing stays with you
 
-The samples you paste in stay in the conversation. They don't get saved anywhere. The only things that end up in your settings are the rules, plus a few example sentences that you've approved.
+The samples you paste in stay in the conversation. They don't get saved anywhere. The only things that end up in your instructions are the rules, plus a few example sentences that you've approved.
+
+## A word of caution
+
+I built this branch from the Copilot documentation and haven't run it end to end in Copilot yet. If something doesn't behave the way this page says, please open an issue.
