@@ -6,7 +6,12 @@ Claude writes well, but it doesn't write like you. You can usually tell when it'
 
 This sorts that out. It's an interview that works out how you write, then gives Claude a set of rules so it sounds like you from then on. That covers emails, documents, chat replies, commit messages, and anything else it writes for you.
 
-This is the Claude version. There's one for GitHub Copilot on the [`github-copilot`](https://github.com/sahilNaran/speak-like-human/tree/github-copilot) branch and one for Microsoft Copilot on the [`ms-copilot`](https://github.com/sahilNaran/speak-like-human/tree/ms-copilot) branch.
+## Not using Claude?
+
+This page is for Claude. If you use something else, head to the right branch:
+
+- GitHub Copilot: [`github-copilot`](https://github.com/sahilNaran/speak-like-human/tree/github-copilot)
+- Microsoft Copilot: [`ms-copilot`](https://github.com/sahilNaran/speak-like-human/tree/ms-copilot)
 
 ## How it works
 
