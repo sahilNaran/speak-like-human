@@ -1,10 +1,12 @@
-# speak-like-human
+# speak-like-human for Microsoft Copilot
 
 > Your uniqueness, makes you, you.
 
-Claude writes well, but it doesn't write like you. You can usually tell when it's had a hand in something: the em dashes, the word "delve", the cheerful sign-off nobody asked for.
+Copilot writes well, but it doesn't write like you. You can usually tell when it's had a hand in something: the em dashes, the word "delve", the cheerful sign-off nobody asked for.
 
-This sorts that out. It's an interview that works out how you write, then gives Claude a set of rules so it sounds like you from then on. That covers emails, documents, chat replies, commit messages, and anything else it writes for you.
+This sorts that out. It's an interview that works out how you write, then gives Copilot a set of rules so it sounds like you from then on, whether it's drafting an email in Outlook or a document in Word.
+
+This is the Microsoft Copilot branch. The Claude version is on `main`, and the GitHub Copilot version is on `github-copilot`.
 
 ## How it works
 
@@ -12,68 +14,41 @@ You start by giving it a few things you've written. It then asks you to write a 
 
 After that it tests itself. It writes a few sentences in your voice and you tell it which sound right and which don't. It does this for five rounds at most, and you can stop it as soon as you're happy.
 
-The full interview takes about 20 minutes. There's a quick one that takes about 5.
+The full interview takes about 20 minutes. If you're short on time, type `quick` at any point and it takes about 5.
 
-## Setting it up in Cowork
+## Running it
 
-All you need is the Claude desktop app and the link to this repo.
+There's nothing to install. The interview is a prompt that you hand to Copilot.
 
-1. In Cowork, go to the Plugins page (it's under Customize, then Browse plugins) and pick Add marketplace. On some versions it's a + button on the Personal tab instead.
-2. Paste in `https://github.com/sahilNaran/speak-like-human`.
-3. Install speak-like-human from the list.
-4. Start a new session and type `run the voice interview`. If you're short on time, type `run the quick voice interview`.
+1. Open [prompts/voice-interview.md](prompts/voice-interview.md) and copy the whole thing. On GitHub, the copy button at the top right of the file does it in one click.
+2. Start a new chat in Copilot, paste it in, and send it.
+3. Answer the questions.
 
-One thing to know: Claude can't change Cowork's settings for you. So when the interview finishes, it gives you your rules as a block of text. Copy it, open Settings, find Global instructions in the Cowork section, paste it in, and save. Every new session will use it.
+If Copilot says the message is too long, download the file, attach it to the chat, and type `follow the instructions in this file`.
 
-If you've already got writing rules in that box, don't worry. The interview asks about them at the start and tells you what to swap out at the end.
+## Saving your rules
 
-This works in normal Claude chat too. The only difference is that the rules go into the personal preferences box in Settings.
+When the interview ends, Copilot gives you your rules as a block of text. Copy it, then:
 
-## Setting it up in Claude Code
+1. Open Copilot's Settings and choose Personalization.
+2. Open Custom instructions.
+3. Paste the rules in, replacing any old writing rules, and save.
+4. Start a new chat.
 
-Clone the repo and open Claude Code inside it. There's nothing to install.
+From then on Copilot follows them. To check, ask it for a short email on anything and see whether it sounds like you.
 
-```
-git clone https://github.com/sahilNaran/speak-like-human.git
-cd speak-like-human
-claude
-```
+If you can't find Custom instructions, or you can't edit it, your organisation's admin may have turned it off. You can still use your rules by pasting them in at the start of a chat.
 
-Then type `/voice-interview`.
+## The other two prompts
 
-You only have to do this once. Your rules get saved to `~/.claude/CLAUDE.md`, which Claude reads in every project, so you can delete the folder afterwards.
+[prompts/voice-tune.md](prompts/voice-tune.md) is for small fixes later. Paste it in, say what sounded wrong ("that email was too stiff", "I do use semicolons"), and it changes the one rule that caused it. You don't have to sit through the interview again.
 
-If you'd like to keep it around, install it as a plugin:
-
-```
-/plugin marketplace add sahilNaran/speak-like-human
-/plugin install speak-like-human@speak-like-human
-```
-
-The commands get a prefix when you do it this way, so it's `/speak-like-human:voice-interview`.
-
-## What's in it
-
-There are three skills.
-
-`voice-interview` is the main one, described above. Add `quick` for the short version.
-
-`voice-tune` is for small fixes later. Tell it what sounded wrong ("that email was too stiff", "I do use semicolons") and it changes the one rule that caused it. You don't have to sit through the interview again.
-
-`voice-check` reads a draft and points out anything that breaks your rules or sounds like a machine wrote it, with a suggested fix for each. It never touches your settings.
-
-## What it changes on your machine
-
-In Cowork and Claude chat, nothing. You paste the rules in yourself.
-
-In Claude Code, it adds one section to `~/.claude/CLAUDE.md` and leaves the rest of the file alone. It shows you exactly what it's going to change and waits for you to say yes. It also saves a copy of the old file next to it first, named something like `CLAUDE.md.bak-20261117-143000`, so if you don't like the result you can copy that back.
-
-If you want to try it without touching your real settings, point it at a different file:
-
-```
-/voice-interview --target /tmp/test-profile.md
-```
+[prompts/voice-check.md](prompts/voice-check.md) checks a draft. Paste it in with your text, and it points out anything that breaks your rules or sounds like a machine wrote it, with a suggested fix for each.
 
 ## Your writing stays with you
 
-The samples you paste in stay in the conversation. They don't get saved anywhere. The only things that end up in your settings are the rules, plus a few example sentences that you've approved.
+The samples you share go into your Copilot chat and nowhere else. This repo has no code in it and collects nothing. Your organisation's usual rules for Copilot chats still apply.
+
+## A word of caution
+
+I built this branch from Microsoft's documentation and haven't run it end to end in Copilot yet. I also couldn't find out how many characters the Custom instructions box accepts, so the interview keeps your rules short and tells you the count. If something doesn't behave the way this page says, please open an issue.
