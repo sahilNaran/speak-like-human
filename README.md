@@ -1,5 +1,7 @@
 # speak-like-human
 
+> Your uniqueness, makes you, you.
+
 Claude writes well, but it doesn't write like you. You can usually tell when it's had a hand in something: the em dashes, the word "delve", the cheerful sign-off nobody asked for.
 
 This sorts that out. It's an interview that works out how you write, then gives Claude a set of rules so it sounds like you from then on. That covers emails, documents, chat replies, commit messages, and anything else it writes for you.
